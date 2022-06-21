@@ -1,0 +1,1 @@
+Step 1: Need to change the file names of the monthly connectivity matrices in the monthly-connectivity-matrices folder so that none of the numbers start with 0. For example 'SetMat_2004_01.mat' needs to be changed to 'SetMat_2004_1.mat' but 'SetMat_2004_10.mat' can stay as is. 
