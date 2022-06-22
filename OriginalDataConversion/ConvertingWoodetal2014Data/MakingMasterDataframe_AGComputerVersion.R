@@ -1,3 +1,4 @@
+###code below written with help from Dr. Marco Andrello.
 #setwd("~/Dropbox/University of Toronto/Research Related/Sally Wood Connectivity Matrix/Ariel_connectivity_SallyWood50reefEEZWDPA_fromMarco")
 
 #read the shape file into R, append the tables to the shape file, remove useless columns
@@ -11,7 +12,8 @@ head(a@data)
 #note: a@data$reefpct is the avg of the reef percentage scores of each of the 50 reef polygons, might be worth using that to get a more accurate
 #calculation of %reef SA in Sally Wood's polygons...but there are issues with 50reefpolygons being in between multiple SallyWoodgridcells and we're 
 #not sure if reefpct is actually reef percent area 
-range(a@data$reefpct)
+range(a@data$reefpct)
+
 maindata <- a@data[,-c(1,3,4)]
 head(maindata)
 

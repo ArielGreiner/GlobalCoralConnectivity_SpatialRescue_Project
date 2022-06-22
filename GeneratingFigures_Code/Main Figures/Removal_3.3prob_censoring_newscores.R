@@ -5,6 +5,7 @@ library(fields)
 library(scales)
 library(maps)
 
+#function for plotting Pacific centred maps written by Cole Brookson, used with permission.
 plot.map<- function(database,center,...){
     Obj <- map(database,...,plot=F)
     coord <- cbind(Obj[[1]],Obj[[2]])

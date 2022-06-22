@@ -50,6 +50,7 @@ dim(centroids_reduced) #12292
 
 world <- readOGR(dsn = "~/Dropbox/University of Toronto/Research Related/Code from Marco 6.2018 mediterranean larval connectivity/worldcountryshapeetc", layer = "ne_110m_admin_0_countries")
 
+#function for plotting Pacific centred maps written by Cole Brookson, used with permission.
 plot.map<- function(database,center,...){
     Obj <- map(database,...,plot=F)
     coord <- cbind(Obj[[1]],Obj[[2]])
