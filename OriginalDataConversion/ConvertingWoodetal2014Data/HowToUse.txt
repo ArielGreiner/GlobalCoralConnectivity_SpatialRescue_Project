@@ -1,4 +1,4 @@
 Step 1: Need to change the file names of the monthly connectivity matrices in the monthly-connectivity-matrices folder (as downloaded from https://doi.org/10.5523/bris.2s0fn0bc89omq2kj2rol7iolwt) so that none of the numbers start with 0. For example 'SetMat_2004_01.mat' needs to be changed to 'SetMat_2004_1.mat' but 'SetMat_2004_10.mat' can stay as is. 
 Step 2: Run the code in 'CreatingConnMat' to generate the connectivity matrix.
 Step 3: Run the code in 'MakingMasterdataframe_AGComputerVersion' to generate the cells12292.RData file. This involves using the data in 'settlement-polygons-with50reefs' which was downloaded from https://doi.org/10.5523/bris.2s0fn0bc89omq2kj2rol7iolwt and then re-projected into Mollweide and 50 reefs data was added to it.
-Step 4: Run the code in 'Creating_ConnMat_reduced.R' to remove the reef cells with no reef cover from the matrix.
+Step 4: Run the code in 'Creating_ConnMat_reduced.R' to remove the reef cells with no reef cover from the matrix and generate the 'connmat_reduced.RData' file which is what you will use to run the code to generate the figures included in the 'GeneratingFigures_Code' folder.
