@@ -5,7 +5,7 @@ HOW TO USE:
 - The data used to generate the results in this paper may be found: The original worldwide reef scores determined in Beyer et al. (2018) are available at https://espace.library.uq.edu.au/view/UQ:0928a6a. The original worldwide coral reef connectivity matrix generated for Wood et al. (2014) and the grid cell coordinates are available at the University of Bristol data repository, data.bris, at https://doi.org/10.5523/bris.2s0fn0bc89omq2kj2rol7iolwt.
 -  If wish to start from the original data (see above), start from the code found in the 'OriginalDataConversion' folder, which will allow you to convert the data from its original form to the form used in the remainder of the code provided.
 -  The data and plots for the Random Scenario were generated on compute canada because the data were too large to host on my personal computer and are also too large to be uploaded here, but the code for generating them on a similar server farm is included in the 'ComputeCanadaCode' folder.
-
+- The code used to generate the results from the study can be found in the 'GeneratingFigures_Code' which is split up into code used to generate the main text results and the supplementary text results.
 
 Please feel free to use and borrow from this code base according to the licence below.
 
