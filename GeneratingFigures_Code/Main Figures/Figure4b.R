@@ -83,7 +83,7 @@ plateaupoint_rr <- rep(NA,(random_iter*200))
 reefdata$num <- seq(1,12292,by=1)
 #print("entering re-seeding for loop")
 #for(k in 1:200){ #because only doing one
-  load('/Volumes/BackupPlus/worldwideconn_random_morereps/1kreps_redux/ordr/RandomScenario_3.3_ordr_1kreps_1.RData') #NOT UPLOADED TO GITHUB
+  load('GeneratingFigures_Code/AdditionalFiles/RandomScenario_3.3_ordr_1kreps_1.RData') #data from one random replicate run
   k=500
   #load(paste0("/home/agreiner/scratch/worldconn_randomrep/1kreps_redux/ordr/RandomScenario_3.3_ordr_1kreps_",k,".RData"))
   j = 1 #only need to look at one rep
