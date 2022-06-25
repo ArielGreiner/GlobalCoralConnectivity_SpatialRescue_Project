@@ -1,12 +1,12 @@
 ###code below written with help from Dr. Marco Andrello.
-#setwd("~/Dropbox/University of Toronto/Research Related/Sally Wood Connectivity Matrix/Ariel_connectivity_SallyWood50reefEEZWDPA_fromMarco")
+setwd("~/Github/GlobalCoralConnectivity_SpatialRescue_Project/")
 
 #read the shape file into R, append the tables to the shape file, remove useless columns
 library(rgdal)
 library(shapefiles)
 
 #read the shape file into an object (which includes the dataframe that we want, and the polygons for plotting)
-a <- readOGR(dsn = "~/Dropbox/University of Toronto/Research Related/Sally Wood Connectivity Matrix/Ariel_connectivity_SallyWood50reefEEZWDPA_fromMarco/016polys_score_Mollweide_with50reefs.shp")
+a <- readOGR(dsn = "OriginalDataConversion/ConvertingWoodetal2014Data/settlement-polygons-with50reefs/016polys_score_Mollweide_with50reefs.shp")
 #access the dataframe
 head(a@data)
 #note: a@data$reefpct is the avg of the reef percentage scores of each of the 50 reef polygons, might be worth using that to get a more accurate
@@ -18,7 +18,7 @@ maindata <- a@data[,-c(1,3,4)]
 head(maindata)
 
 #add in %reef data
-percentreef <- read.dbf(dbf.name = "~/Dropbox/University of Toronto/Research Related/Sally Wood Connectivity Matrix/Ariel_connectivity_SallyWood50reefEEZWDPA_fromMarco/Reef_Cover.dbf")
+percentreef <- read.dbf(dbf.name = "OriginalDataConversion/ConvertingWoodetal2014Data/ExtraData/Reef_Cover.dbf")
 head(percentreef$dbf) #dataframe, FID_ = TARGET_FID in maindata, missing the ones with no reef cover
 percentreeftable <- percentreef$dbf
 id <- match(x = maindata$TARGET_FID, table = percentreeftable$FID_) #assigns NAs to the values in TARGET_FID that don't show up in FID_
@@ -33,7 +33,7 @@ names(maindata2)[13] <- "BCU_Name" #rename ReefName
 names(maindata2)[12] <- "BCU_ID" #rename puid
 
 #add in %50reef data (note: BCU refers to the 50 reefs)
-percent50reef <- read.dbf(dbf.name = "~/Dropbox/University of Toronto/Research Related/Sally Wood Connectivity Matrix/Ariel_connectivity_SallyWood50reefEEZWDPA_fromMarco/50Reef_Cover.dbf")
+percent50reef <- read.dbf(dbf.name = "OriginalDataConversion/ConvertingWoodetal2014Data/ExtraData/50Reef_Cover.dbf")
 head(percent50reef$dbf) #dataframe, FID_ = TARGET_FID in maindata, missing the ones with no reef cover
 percent50reeftable <- percent50reef$dbf
 idfifty <- match(x = maindata$TARGET_FID, table = percent50reeftable$FID_) #assigns NAs to the values in TARGET_FID that don't show up in FID_
@@ -45,7 +45,7 @@ names(maindata3)[17] <- "BCUpctarea" #replace PERCENTAGE
 #head(maindata3)
 
 #add in %protected data
-percentprotected <- read.dbf(dbf.name = "~/Dropbox/University of Toronto/Research Related/Sally Wood Connectivity Matrix/Ariel_connectivity_SallyWood50reefEEZWDPA_fromMarco/MPA_Cover.dbf")
+percentprotected <- read.dbf(dbf.name = "OriginalDataConversion/ConvertingWoodetal2014Data/ExtraData/MPA_Cover.dbf")
 head(percentprotected$dbf) #dataframe, FID_ = TARGET_FID in maindata, missing the ones with no reef cover
 idprt <- match(x = maindata$TARGET_FID, table = percentprotected$dbf$FID_) #assigns NAs to the values in TARGET_FID that don't show up in FID_
 maindata4 <- cbind(maindata3,percentprotected$dbf[idprt,])
@@ -56,7 +56,7 @@ names(maindata4)[19] <- "pct_Protectedarea" #replace PERCENTAGE
 head(maindata4)
 
 #add in marine realms
-marinerealm <- read.dbf(dbf.name = "~/Dropbox/University of Toronto/Research Related/Sally Wood Connectivity Matrix/Ariel_connectivity_SallyWood50reefEEZWDPA_fromMarco/Marine Realms Costello/016polys_score_Realms_join_1to1_bis.dbf")
+marinerealm <- read.dbf(dbf.name = "OriginalDataConversion/ConvertingWoodetal2014Data/ExtraData/Marine Realms Costello/016polys_score_Realms_join_1to1_bis.dbf")
 head(marinerealm$dbf) #dataframe, FID_ = TARGET_FID in maindata
 #12397 rows <- so all of them were assigned realms bc join count = 1 for all also, etc
 #which((maindata4$TARGET_FID - marinerealm$dbf$TARGET_FID) != 0) #integer(0) so same order 
@@ -66,7 +66,10 @@ maindata5$MRealm_Name <- marinerealm$dbf$Name
 head(maindata5)
 
 #add in EEZ data
-EEZ <- read.dbf(dbf.name = "~/Dropbox/University of Toronto/Research Related/Sally Wood Connectivity Matrix/Ariel_connectivity_SallyWood50reefEEZWDPA_fromMarco/EEZs/016polys_score_EEZ_join_1to1.dbf") #this one concatenated the names if there were multiple
+#the terms of use for this data state that it is not to be uploaded elsewhere without permission, to access the files go to http://www.vliz.be/en/imis?module=dataset&dasid=5465
+#this data is not used in the project itself, but remained in the dataframe and so if you do not include this column...the column numberings will be off. But I include the final cells12292.RData dataframe that one can work from instead of re-generating it.
+
+EEZ <- read.dbf(dbf.name = "~/.../EEZs/016polys_score_EEZ_join_1to1.dbf") #this one concatenated the names if there were multiple
 head(EEZ$dbf) #dataframe, FID_ = TARGET_FID in maindata
 #12397 rows <- so all of them were assigned EEZs, sometimes join count > 1
 #which((maindata5$TARGET_FID - EEZ$dbf$TARGET_FID) != 0) #integer(0) so same order 
@@ -107,17 +110,13 @@ length(id.noReef)
 # Append complete dataframe to shape file
 a@data <- maindata6
 
-# Save and write the shapefile with all cells (including empty ones) if we ever need it...
-save(a,file="cells12397.RData")
-writeOGR(a,dsn=getwd(),layer="/cells12397",driver="ESRI Shapefile") #dsn is the folder it goes in, layer is the name of the shape file, will always use ESRI shapefile
-
 # Remove empty cells
 b <- a[-id.noReef,]
 dim(b)
 
 # Save and write the shapefile with reef cells only.
-save(id.noReef,b,file="cells12292.RData")
-writeOGR(b,dsn=getwd(),layer="/cells12292",driver="ESRI Shapefile")
+save(id.noReef,b,file="OriginalDataConversion/ConvertingWoodetal2014Data/cells12292.RData")
+#writeOGR(b,dsn=getwd(),layer="/cells12292",driver="ESRI Shapefile")
 
 
 
