@@ -98,6 +98,13 @@ plot.map("world", center=newcentre, col="gainsboro",bg="white",lwd = 0.000002,
 points(reefdata$Longitude_corrected,reefdata$Latitude,col=reefdata$cl.c,pch=20,cex=0.2) #cex=0.05
 dev.off()
 
+#EDIT 11.27.2023: Added a higher res version of the figure, as people keep asking for it
+png(paste0("GeneratingFigures_Code/Main Figures/Figure1a_highres.png"),width=20,height=20,units="cm",res=3000, pointsize=4) #res=1000
+plot.map("world", center=newcentre, col="gainsboro",bg="white",lwd = 0.000002,
+         fill=TRUE,ylim=c(-60,90),mar=c(0,0,0,0))
+points(reefdata$Longitude_corrected,reefdata$Latitude,col=reefdata$cl.c,pch=20,cex=0.2) #cex=0.05
+dev.off()
+
 ###Figure 1b: Source Strength map
 g_orig <- graph.adjacency(as.matrix(connmat_reduced), weighted = TRUE)
 cols_source <- tim.colors(710)
