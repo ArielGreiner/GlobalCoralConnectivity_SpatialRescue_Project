@@ -105,6 +105,22 @@ plot.map("world", center=newcentre, col="gainsboro",bg="white",lwd = 0.000002,
 points(reefdata$Longitude_corrected,reefdata$Latitude,col=reefdata$cl.c,pch=20, cex = 0.2) #cex=0.2
 dev.off()
 
+worldmap <- map_data ("world", wrap = c(0, 360))
+SteppingStones_Round1 <-  
+  ggplot(aes(x = long, y = lat), data = worldmap) + 
+  geom_polygon(aes(group = group), fill="gainsboro", colour = "gainsboro") +
+  xlab("Longitude") + ylab("Latitude")+ 
+  geom_point(data = reefdata[reefdata$reefnum %in% steppingstonecandidates_roundone,], aes(x = Longitude, y = Latitud))+
+  #scale_color_viridis(discrete = FALSE, name = "Natural Coral Mortality Rate")+
+  #scale_color_manual(values = c("red","light blue"), name = "More than one year?", labels = c("no","yes"), guide = guide_legend(reverse=TRUE))+
+  coord_cartesian(xlim = c(40,120), ylim = c(-50,50)) +
+  scale_y_continuous(limits = c(-50,50)) + 
+  scale_x_continuous(limits = c(180 - 140, 180 - 60), #c(180 - 3, 180 + 2.5) #c(180 - 3, 180)
+                     breaks = seq(40, 120, 10)) +
+  coord_equal() +  theme_bw()
+ggsave(SteppingStones_Round1, filename = paste0("CoralReefSteppingStones/SteppingStones_v2/SteppingStoneCandidates_Round1_zoomedin.png"), bg = "transparent", height = 10, width = 10)
+
+
 ###Figure 1b: Source Strength map
 g_orig <- graph.adjacency(as.matrix(connmat_reduced), weighted = TRUE)
 cols_source <- tim.colors(710)
